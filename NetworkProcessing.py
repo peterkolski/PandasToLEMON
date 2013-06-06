@@ -52,6 +52,7 @@ def readLGF_EdgeArc_DF( source ):
     mFrame = pd.read_table('tmp.txt')
     os.remove('tmp.txt')
     mFrame = mFrame.dropna( axis=1, how='all')
+    mFrame.columns = np.append(['from', 'to'], mFrame.columns.values[2:])
     return mFrame
 
 # ========================================================
