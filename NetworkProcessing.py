@@ -4,6 +4,13 @@ from pandas import DataFrame
 import fileinput
 import networkx as nx
 import os
+import datetime
+
+# ========================================================
+#   INIT
+# ========================================================
+
+mToday = datetime.date.today()
 
 
 # ========================================================
@@ -20,6 +27,7 @@ def readLGF_Nodes_DF( source ):
     else:
         print('No keyword \'@arcs\' or \'@edges\' found\n Wrong file format')
         return
+    print fileString[:fileString.find('@nodes')]
     strDat = fileString[fileString.find('@nodes')+7:fileString.find(endPos)]
     mOutFile = open('tmp.txt',mode='w')
     mOutFile.write(strDat)
@@ -97,8 +105,9 @@ def DF_merge_NXfunc( df, func, colName ):
 # ========================================================
 # ========================================================
 
-def writeDF_LGF( fileName, NodesDF, ArcsDF ):
+def writeDF_LGF( fileName, NodesDF, ArcsDF, info='' ):
     file = open( fileName,'w')
+    file.write( mToday.strftime('%d. %m. %Y') + '\n' + info + '\n')
     file.write('@nodes\n')
     NodesDF.to_csv( file, index=False, sep="\t")
     file.write('@arcs\n\t\t')
